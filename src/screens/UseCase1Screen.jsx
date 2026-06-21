@@ -154,7 +154,7 @@ export function MemberListScreen() {
         { name: 'Shivam', phone: '98765 43210', status: 'Active', plan: 'Gold', sc: 'bg-green-500/20 text-green-400' },
         { name: 'Pratham', phone: '88220 11122', status: 'Active', plan: 'Silver', sc: 'bg-yellow-500/20 text-yellow-400' },
         { name: 'Ananya', phone: '78220 11122', status: 'Soon', plan: 'Silver', sc: 'bg-yellow-500/20 text-yellow-400' },
-        { name: 'Yash Bisht', phone: '65435 11122', status: 'Soon', plan: 'Silver', sc: 'bg-yellow-500/20 text-yellow-400' },
+        { name: 'Aman', phone: '65435 11122', status: 'Soon', plan: 'Silver', sc: 'bg-yellow-500/20 text-yellow-400' },
     ]
     const [query, setQuery] = useState('')
     const [selected, setSelected] = useState(null)
