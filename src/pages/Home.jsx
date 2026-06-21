@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <div className='w-full h-screen border border-white/14 rounded-2xl px-6 pt-18 md:py-20 flex flex-col items-center text-white'>
+    <div className='w-full h-screen border border-white/14 rounded-2xl px-6 pt-18 md:py-20 flex flex-col items-center overflow-hidden overflow-y-scroll text-white'>
 
       <div className='md:max-w-2xl flex-col gap-4 md:gap-8 flex'>
 
