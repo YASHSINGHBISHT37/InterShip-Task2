@@ -15,6 +15,7 @@ export default function Home() {
             <p className='text-white/50 text-xs md:text-sm md:leading-normal'>React · ReactNative</p>
           </div>
         </div>
+          
 
         <div>
           <p className='text-white/50 text-xs leading-4 animate-fade-up opacity-0 md:text-sm md:leading-normal' style={{ animationDelay: '100ms' }}>
