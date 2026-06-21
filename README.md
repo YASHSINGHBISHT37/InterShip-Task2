@@ -46,13 +46,12 @@ src/
 │   ├── UseCase2.jsx
 │   └── UseCase3.jsx
 ├── screens/
-│   ├── UseCase1Screens.jsx
-│   ├── UseCase2Screens.jsx
-│   ├── UseCase3Screens.jsx
-│   └── UseCase3.jsx
+│   ├── UseCase1Screen.jsx
+│   ├── UseCase2Screen.jsx
+│   ├── UseCase3Screen.jsx
 ├── ui/
-│   ├── leftScreens.jsx
-│   ├── rightScreens.jsx
+│   ├── leftScreen.jsx
+│   ├── rightScreen.jsx
 └── App.jsx
 └── main.jsx
 ```
