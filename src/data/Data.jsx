@@ -20,7 +20,7 @@ import { DashboardScreen as PharmacyDashboard } from "../screens/UseCase3Screen"
 import { StockManagementScreen } from "../screens/UseCase3Screen";
 import { NewBillScreen } from "../screens/UseCase3Screen";
 import { SupplierPurchaseScreen } from "../screens/UseCase3Screen";
-import { ReportsScreen as PharmacyReports } from "../screens/UseCase3Screen";
+import { SupplierPurchaseScreen as PharmacyReports } from "../screens/UseCase3Screen";
 
 
 export const useCase1Data = {

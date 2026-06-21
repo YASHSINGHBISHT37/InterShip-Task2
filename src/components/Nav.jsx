@@ -14,29 +14,42 @@ export default function Nav() {
     const isHome = location.pathname === '/'
 
     return (
-        <div className='w-full'>
+        <div className='w-full z-9999999'>
             {/* Main Nav */}
-            <div className="px-4 md:px-6 fixed top-0 left-0 w-full py-3 h-14 md:py-4 flex items-center justify-between backdrop-blur-2xl z-99 border-b border-white/15 border-t border-l border-r rounded-t-2xl">
+            <div className="px-4 md:px-6 fixed top-0 left-0 w-full py-3 h-14 md:py-4 flex items-center justify-between backdrop-blur-2xl z-99 border-b border-white/15 border-t border-l border-r rounded-t-2xl animate-fade-up opacity-0" style={{ animationDelay: '0ms' }}>
                 <div className='flex items-center gap-1.5 min-w-0'>
-                    <span className="w-2 h-2 md:w-3 md:h-3 shrink-0 rounded-full bg-[#ff5f56]" />
-                    <span className="w-2 h-2 md:w-3 md:h-3 shrink-0 rounded-full bg-[#ffbd2e]" />
-                    <span className="w-2 h-2 md:w-3 md:h-3 shrink-0 rounded-full bg-[#27c93f]" />
-                    <span className="text-sm md:text-sm ml-2 leading-4 font-semibold tracking-tight md:hidden">Task 2</span>
-                    <span className="text-sm md:text-sm ml-2 leading-4 font-semibold tracking-tight hidden md:block">{currentTitle}</span>
+                    <span className="w-2 h-2 md:w-3 md:h-3 shrink-0 rounded-full bg-[#ff5f56] animate-fade-up opacity-0" style={{ animationDelay: '0ms' }} />
+                    <span className="w-2 h-2 md:w-3 md:h-3 shrink-0 rounded-full bg-[#ffbd2e] animate-fade-up opacity-0" style={{ animationDelay: '100ms' }} />
+                    <span className="w-2 h-2 md:w-3 md:h-3 shrink-0 rounded-full bg-[#27c93f] animate-fade-up opacity-0" style={{ animationDelay: '200ms' }} />
+                    <span className="text-sm ml-2 leading-4 font-semibold tracking-tight md:hidden animate-fade-up opacity-0" style={{ animationDelay: '300ms' }}>Task 2</span>
+                    <span className="text-sm ml-2 leading-4 font-semibold tracking-tight hidden md:block animate-fade-up opacity-0" style={{ animationDelay: '100ms' }}>{currentTitle}</span>
                 </div>
 
-                <div className='flex items-center gap-2.5 md:gap-5 text-[12px] md:text-[14px] font-medium tracking-tigh shrink-0'>
-                    <NavLink to="/" className={({ isActive }) => isActive ? 'text-blue-400' : 'cursor-pointer hover:text-white/70'}>Home</NavLink>
-                    <NavLink to="/uc-01" className={({ isActive }) => isActive ? 'text-blue-400' : 'cursor-pointer hover:text-white/70'}>UC-01</NavLink>
-                    <NavLink to="/uc-02" className={({ isActive }) => isActive ? 'text-blue-400' : 'cursor-pointer hover:text-white/70'}>UC-02</NavLink>
-                    <NavLink to="/uc-03" className={({ isActive }) => isActive ? 'text-blue-400' : 'cursor-pointer hover:text-white/70'}>UC-03</NavLink>
+                <div className='flex items-center gap-2.5 md:gap-5 text-[12px] md:text-[14px] font-medium tracking-tight shrink-0'>
+                    {[
+                        { to: '/', label: 'Home', delay: '0ms' },
+                        { to: '/uc-01', label: 'UC-01', delay: '100ms' },
+                        { to: '/uc-02', label: 'UC-02', delay: '200ms' },
+                        { to: '/uc-03', label: 'UC-03', delay: '300ms' },
+                    ].map(({ to, label, delay }) => (
+                        <NavLink
+                            key={to}
+                            to={to}
+                            style={{ animationDelay: delay }}
+                            className={({ isActive }) =>
+                                `animate-fade-up opacity-0 cursor-pointer transition-colors ${isActive ? 'text-blue-400' : 'hover:text-white/70'}`
+                            }
+                        >
+                            {label}
+                        </NavLink>
+                    ))}
                 </div>
             </div>
 
-            {/* Title bar — Home pe nahi dikhega */}
+            {/* Title bar */}
             {!isHome && currentTitle && (
-                <div className='fixed z-99 backdrop-blur-2xl bg-[#121212] top-14 left-0 border-b border-white/15 w-full p-2 border-l rounded-b-2xl border-r md:hidden'>
-                    <span className="text-sm md:text-sm ml-2 leading-4 font-semibold tracking-tight">{currentTitle}</span>
+                <div className='fixed z-99 backdrop-blur-2xl bg-[#121212] top-14 left-0 border-b border-white/15 w-full p-2 border-l rounded-b-2xl border-r md:hidden animate-fade-up opacity-0' style={{ animationDelay: '100ms' }}>
+                    <span className="text-sm ml-2 leading-4 font-semibold tracking-tight animate-fade-up opacity-0" style={{ animationDelay: '100ms' }}>{currentTitle}</span>
                 </div>
             )}
         </div>

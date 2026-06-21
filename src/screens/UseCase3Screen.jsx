@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 
-/* ══════════════════ LOGIN ══════════════════ */
+const PRIMARY = '#12524C'
+const PRIMARY_HOVER = '#0e3f3a'
+const PRIMARY_LIGHT = 'rgba(18,82,76,0.15)'
+const PRIMARY_BORDER = 'rgba(18,82,76,0.3)'
+const PRIMARY_TEXT = '#5DCAA5'
+
 export function LoginScreen() {
     const [role, setRole] = useState('Owner')
     const [username, setUsername] = useState('')
@@ -24,7 +29,8 @@ export function LoginScreen() {
                     <button
                         key={r}
                         onClick={() => setRole(r)}
-                        className={`flex-1 cursor-pointer transition-all duration-300 ease-in-out py-2 text-xs font-medium transition-colors ${r === role ? 'bg-emerald-600 text-white' : 'bg-transparent text-white/40 hover:text-white/70'}`}
+                        style={r === role ? { backgroundColor: PRIMARY } : {}}
+                        className={`flex-1 cursor-pointer py-2 text-xs font-medium transition-all duration-300 ${r === role ? 'text-white' : 'bg-transparent text-white/40 hover:text-white/70'}`}
                     >
                         {r}
                     </button>
@@ -37,14 +43,21 @@ export function LoginScreen() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="e.g. pharmacy_admin"
-                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-white placeholder-white/30 outline-none focus:border-emerald-500"
+                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-white placeholder-white/30 outline-none"
+                    style={{ '--tw-ring-color': PRIMARY }}
+                    onFocus={(e) => (e.target.style.borderColor = PRIMARY)}
+                    onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
                 />
             </div>
 
             <div>
                 <div className="flex justify-between mb-1">
                     <label className="text-[9px] uppercase tracking-widest text-white/30">PIN / Password</label>
-                    <span onClick={() => setShowPin(!showPin)} className="text-[9px] text-emerald-400 cursor-pointer hover:text-emerald-300">
+                    <span
+                        onClick={() => setShowPin(!showPin)}
+                        style={{ color: PRIMARY_TEXT }}
+                        className="text-[9px] cursor-pointer hover:opacity-80"
+                    >
                         {showPin ? 'HIDE' : 'SHOW'}
                     </span>
                 </div>
@@ -53,7 +66,9 @@ export function LoginScreen() {
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
                     placeholder="••••"
-                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-white placeholder-white/40 tracking-[0.3em] outline-none focus:border-emerald-500"
+                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2 text-xs text-white placeholder-white/40 tracking-[0.3em] outline-none"
+                    onFocus={(e) => (e.target.style.borderColor = PRIMARY)}
+                    onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
                 />
             </div>
 
@@ -61,23 +76,25 @@ export function LoginScreen() {
                 <label className="flex items-center gap-1.5 text-[10px] text-white/40 cursor-pointer">
                     <span
                         onClick={() => setRemember(!remember)}
-                        className={`w-3 h-3 rounded border flex items-center justify-center ${remember ? 'bg-emerald-600 border-emerald-600' : 'border-white/20'}`}
+                        style={remember ? { backgroundColor: PRIMARY, borderColor: PRIMARY } : {}}
+                        className={`w-3 h-3 rounded border flex items-center justify-center ${!remember ? 'border-white/20' : ''}`}
                     >
                         {remember && <span className="text-[8px] text-white">✓</span>}
                     </span>
                     Remember me
                 </label>
-                <span className="text-[10px] text-emerald-400 cursor-pointer hover:text-emerald-300">Forgot PIN?</span>
+                <span style={{ color: PRIMARY_TEXT }} className="text-[10px] cursor-pointer hover:opacity-80">Forgot PIN?</span>
             </div>
 
             <button
                 onClick={handleLogin}
-                className="w-full py-2.5 bg-emerald-600 cursor-pointer hover:bg-emerald-500 rounded-lg text-xs font-semibold tracking-widest transition-colors"
+                style={{ backgroundColor: PRIMARY }}
+                className="w-full py-2.5 cursor-pointer rounded-lg text-xs font-semibold tracking-widest text-white transition-all hover:opacity-90"
             >
                 LOGIN →
             </button>
 
-            {status && <p className="text-center text-[10px] text-emerald-300">{status}</p>}
+            {status && <p style={{ color: PRIMARY_TEXT }} className="text-center text-[10px]">{status}</p>}
 
             <p className="text-center text-[10px] text-white/30">
                 Drug License No. <span className="text-white/50">DL-20B-UP-44231</span> · auto-stamped on bills
@@ -86,7 +103,6 @@ export function LoginScreen() {
     )
 }
 
-/* ══════════════════ DASHBOARD ══════════════════ */
 export function DashboardScreen() {
     const [dismissed, setDismissed] = useState({ expiry: false, stock: false })
 
@@ -128,13 +144,16 @@ export function DashboardScreen() {
 
             <div className="flex flex-col gap-1.5">
                 {[
-                    { name: 'Paracetamol 500mg sold ×12', time: '10:12 AM', color: 'bg-emerald-400' },
-                    { name: 'Amoxicillin batch B-2291 — 12 days to expiry', time: '—', color: 'bg-yellow-400' },
-                    { name: 'Cough Syrup sold ×3', time: '10:34 AM', color: 'bg-emerald-400' },
+                    { name: 'Paracetamol 500mg sold ×12', time: '10:12 AM', dot: PRIMARY_TEXT },
+                    { name: 'Amoxicillin batch B-2291 — 12 days to expiry', time: '—', dot: '#d4a822' },
+                    { name: 'Cough Syrup sold ×3', time: '10:34 AM', dot: PRIMARY_TEXT },
                 ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <span className={`w-1.5 h-1.5 rounded-full ${item.color} flex-shrink-0`} />
+                            <span
+                                style={{ backgroundColor: item.dot }}
+                                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                            />
                             <span className="text-[11px] text-white/70">{item.name}</span>
                         </div>
                         <span className="text-[10px] text-white/30">{item.time}</span>
@@ -151,7 +170,6 @@ export function StockManagementScreen() {
         { name: 'Paracetamol 500mg', batch: 'B-1182', expiry: '02 Jul 2026', qty: 240, mrp: '₹2', sc: 'text-yellow-400' },
         { name: 'Amoxicillin 250mg', batch: 'B-2291', expiry: '04 Jul 2026', qty: 18, mrp: '₹45', sc: 'text-red-400' },
         { name: 'Cetirizine 10mg', batch: 'B-0987', expiry: '14 Dec 2026', qty: 320, mrp: '₹3', sc: 'text-green-400' },
-        { name: 'Cough Syrup 100ml', batch: 'B-1456', expiry: '20 Jun 2026', qty: 12, mrp: '₹85', sc: 'text-red-400' },
     ]
 
     return (
@@ -159,7 +177,8 @@ export function StockManagementScreen() {
             <div className="flex justify-end">
                 <button
                     onClick={() => alert('Open add-batch form')}
-                    className="bg-emerald-600 hover:bg-emerald-500 px-4 cursor-pointer py-1.5 rounded-full text-[10px] font-semibold text-white transition-colors"
+                    style={{ backgroundColor: PRIMARY }}
+                    className="hover:opacity-90 px-4 cursor-pointer py-1.5 rounded-full text-[10px] font-semibold text-white transition-all"
                 >
                     + ADD BATCH
                 </button>
@@ -192,7 +211,6 @@ export function StockManagementScreen() {
 export function NewBillScreen() {
     const [items, setItems] = useState([
         { name: 'Paracetamol 500mg', qty: 2, price: 2, gst: 5 },
-        { name: 'Cetirizine 10mg', qty: 1, price: 3, gst: 5 },
     ])
     const [search, setSearch] = useState('')
 
@@ -213,13 +231,16 @@ export function NewBillScreen() {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Scan barcode or search medicine"
-                    className="flex-1 bg-white/5 border border-white/10 rounded-full px-3 py-2 text-[10px] text-white placeholder-white/30 outline-none focus:border-emerald-500"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-full px-3 py-2 text-[10px] text-white placeholder-white/30 outline-none"
+                    onFocus={(e) => (e.target.style.borderColor = PRIMARY)}
+                    onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
                 />
                 <button
                     onClick={addItem}
-                    className="bg-emerald-600 px-3 cursor-pointer py-1.5 rounded-full text-[10px] font-semibold text-white hover:bg-emerald-500 transition-colors"
+                    style={{ backgroundColor: PRIMARY }}
+                    className="px-5 border border-white/20 cursor-pointer rounded-full text-[9px] font-semibold text-white hover:opacity-90 transition-all"
                 >
-                    📷 SCAN
+                    SCAN
                 </button>
             </div>
 
@@ -251,7 +272,8 @@ export function NewBillScreen() {
 
             <button
                 onClick={() => alert('Printing thermal receipt...')}
-                className="w-full py-2.5 bg-emerald-600 cursor-pointer hover:bg-emerald-500 rounded-lg text-xs font-semibold tracking-widest transition-colors"
+                style={{ backgroundColor: PRIMARY }}
+                className="w-full py-2.5 cursor-pointer hover:opacity-90 rounded-lg text-xs font-semibold tracking-widest text-white transition-all"
             >
                 PRINT BILL
             </button>
@@ -262,9 +284,8 @@ export function NewBillScreen() {
 /* ══════════════════ SUPPLIER & PURCHASE ══════════════════ */
 export function SupplierPurchaseScreen() {
     const suppliers = [
-        { name: 'MedPlus Distributors', credit: '30 days', last: '08 Jun 2026', status: 'Received', sc: 'bg-green-500/20 text-green-400' },
-        { name: 'Sunrise Pharma Supply', credit: '15 days', last: '14 Jun 2026', status: 'Pending Delivery', sc: 'bg-yellow-500/20 text-yellow-400' },
-        { name: 'Apex Healthcare Agency', credit: '45 days', last: '02 Jun 2026', status: 'Received', sc: 'bg-green-500/20 text-green-400' },
+        { name: 'MedPlus Distributors', credit: '30 days', last: '08 Jun 2026', status: 'Received', badge: { bg: 'rgba(18,82,76,0.3)', color: PRIMARY_TEXT } },
+        { name: 'Sunrise Pharma Supply', credit: '15 days', last: '14 Jun 2026', status: 'Pending Delivery', badge: { bg: 'rgba(180,140,20,0.2)', color: '#d4a822' } },
     ]
 
     return (
@@ -272,7 +293,8 @@ export function SupplierPurchaseScreen() {
             <div className="flex justify-end">
                 <button
                     onClick={() => alert('Open new purchase order form')}
-                    className="bg-emerald-600 hover:bg-emerald-500 px-4 cursor-pointer py-1.5 rounded-full text-[10px] font-semibold text-white transition-colors"
+                    style={{ backgroundColor: PRIMARY }}
+                    className="hover:opacity-90 px-4 cursor-pointer py-1.5 rounded-full text-[10px] font-semibold text-white transition-all"
                 >
                     + ORDER
                 </button>
@@ -283,7 +305,12 @@ export function SupplierPurchaseScreen() {
                     <div key={i} className="bg-white/[0.03] border border-white/10 rounded-xl px-3 py-2.5">
                         <div className="flex justify-between items-center">
                             <span className="text-xs text-white/80 font-medium">{s.name}</span>
-                            <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full ${s.sc}`}>{s.status}</span>
+                            <span
+                                style={{ backgroundColor: s.badge.bg, color: s.badge.color }}
+                                className="text-[9px] font-semibold px-2 py-0.5 rounded-full"
+                            >
+                                {s.status}
+                            </span>
                         </div>
                         <div className="flex justify-between mt-1">
                             <span className="text-[10px] text-white/40">Credit: {s.credit}</span>
@@ -293,70 +320,12 @@ export function SupplierPurchaseScreen() {
                 ))}
             </div>
 
-            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 text-[10px] text-emerald-300">
+            <div
+                style={{ backgroundColor: PRIMARY_LIGHT, borderColor: PRIMARY_BORDER, color: PRIMARY_TEXT }}
+                className="border rounded-lg px-3 py-2 text-[10px]"
+            >
                 Suggested reorder: Amoxicillin 250mg × 50, based on avg. daily sales
             </div>
-        </div>
-    )
-}
-
-/* ══════════════════ REPORTS ══════════════════ */
-export function ReportsScreen() {
-    const ranges = {
-        Daily: [40],
-        Monthly: [65, 45, 72, 58, 80, 55, 90],
-        'GST Report': [50, 60, 45],
-    }
-    const [range, setRange] = useState('Monthly')
-    const bars = ranges[range]
-    const maxH = 56
-
-    return (
-        <div className="flex flex-col gap-3">
-            <div className="flex gap-1.5">
-                {Object.keys(ranges).map((t) => (
-                    <button
-                        key={t}
-                        onClick={() => setRange(t)}
-                        className={`px-3 py-1 rounded-full border cursor-pointer border-white/10 text-[10px] font-medium transition-colors ${t === range ? 'bg-emerald-600 text-white' : 'bg-white/5 text-white/40 hover:text-white/70'}`}
-                    >
-                        {t}
-                    </button>
-                ))}
-            </div>
-
-            <div className="bg-white/[0.03] border border-white/10 rounded-xl p-3">
-                <div className="flex items-end gap-1.5 h-16">
-                    {bars.map((h, i) => (
-                        <div key={i} className="flex-1 flex flex-col justify-end">
-                            <div
-                                className={`w-full rounded-t-md duration-600 ease-in-out transition-all ${i === bars.length - 1 ? 'bg-emerald-500' : 'bg-emerald-700/60'}`}
-                                style={{ height: `${(h / 100) * maxH}px` }}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-                {[
-                    { label: 'Total Sales', value: '₹2.1L' },
-                    { label: 'Top Medicine', value: 'Paracetamol' },
-                    { label: 'GST Collected', value: '₹9.4K' },
-                ].map((s) => (
-                    <div key={s.label} className="text-center">
-                        <p className="text-sm font-bold text-white">{s.value}</p>
-                        <p className="text-[9px] text-white/40 mt-0.5">{s.label}</p>
-                    </div>
-                ))}
-            </div>
-
-            <button
-                onClick={() => alert('Exporting GSTR-1 ready file...')}
-                className="w-full py-2 border cursor-pointer border-white/15 rounded-lg text-[10px] font-semibold text-white/50 hover:border-white/30 hover:text-white/70 tracking-widest transition-colors"
-            >
-                EXPORT FOR GST FILING
-            </button>
         </div>
     )
 }
