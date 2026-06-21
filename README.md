@@ -33,8 +33,9 @@ Each use case includes:
 ---
 
 ## Project Structure
-src/
 
+```
+src/
 ├── pages/
 │   ├── Home.jsx
 │   ├── UseCase1.jsx
@@ -45,8 +46,7 @@ src/
 ├── data/
 │   └── Data.js
 └── App.jsx
-
----
+```
 
 ## Getting Started
 
