@@ -60,15 +60,3 @@ npm run dev
 # Build for production
 npm run build
 ```
-
----
-
-## Author
-
-**Yash Singh Bisht**  
-BCA Student — Institute of Innovation in Technology and Management (IITM)  
-Technical Intern — Talking Crooks IT Pvt. Ltd.
-
----
-
-*Built for Internship Task 2 — June 2026*
