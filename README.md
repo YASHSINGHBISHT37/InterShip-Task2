@@ -36,16 +36,25 @@ Each use case includes:
 
 ```
 src/
+├── components/
+│   └── Nav.jsx
+├── data/
+│   └── Data.js
 ├── pages/
 │   ├── Home.jsx
 │   ├── UseCase1.jsx
 │   ├── UseCase2.jsx
 │   └── UseCase3.jsx
-├── components/
-│   └── Nav.jsx
-├── data/
-│   └── Data.js
+├── screens/
+│   ├── UseCase1Screens.jsx
+│   ├── UseCase2Screens.jsx
+│   ├── UseCase3Screens.jsx
+│   └── UseCase3.jsx
+├── ui/
+│   ├── leftScreens.jsx
+│   ├── rightScreens.jsx
 └── App.jsx
+└── main.jsx
 ```
 
 ## Getting Started
