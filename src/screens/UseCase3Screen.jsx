@@ -6,6 +6,7 @@ const PRIMARY_LIGHT = 'rgba(18,82,76,0.15)'
 const PRIMARY_BORDER = 'rgba(18,82,76,0.3)'
 const PRIMARY_TEXT = '#5DCAA5'
 
+
 export function LoginScreen() {
     const [role, setRole] = useState('Owner')
     const [username, setUsername] = useState('')
@@ -326,6 +327,154 @@ export function SupplierPurchaseScreen() {
             >
                 Suggested reorder: Amoxicillin 250mg × 50, based on avg. daily sales
             </div>
+        </div>
+    )
+}
+
+/* ══════════════════ REPORTS ══════════════════ */
+export function ReportsScreen() {
+    const [range, setRange] = useState('This Month')
+    const [tab, setTab] = useState('Sales')
+
+    const salesData = {
+        Today: [
+            { day: '9AM', amt: 12 },
+            { day: '11AM', amt: 28 },
+            { day: '1PM', amt: 45 },
+            { day: '3PM', amt: 38 },
+            { day: '5PM', amt: 60 },
+            { day: '7PM', amt: 72 },
+            { day: '9PM', amt: 34 },
+        ],
+        'This Month': [
+            { day: 'Mon', amt: 35 },
+            { day: 'Tue', amt: 52 },
+            { day: 'Wed', amt: 41 },
+            { day: 'Thu', amt: 68 },
+            { day: 'Fri', amt: 74 },
+            { day: 'Sat', amt: 90 },
+            { day: 'Sun', amt: 58 },
+        ],
+        Custom: [
+            { day: 'W1', amt: 50 },
+            { day: 'W2', amt: 64 },
+            { day: 'W3', amt: 48 },
+            { day: 'W4', amt: 80 },
+        ],
+    }
+
+    const kpisByRange = {
+        Today: [
+            { label: 'Total Sales', value: '₹8.4K' },
+            { label: 'Top Selling', value: 'Cetirizine' },
+            { label: 'GST Collected', value: '₹420' },
+            { label: 'Profit Margin', value: '17.1%' },
+        ],
+        'This Month': [
+            { label: 'Total Sales', value: '₹1.42L' },
+            { label: 'Top Selling', value: 'Paracetamol' },
+            { label: 'GST Collected', value: '₹6,840' },
+            { label: 'Profit Margin', value: '18.4%' },
+        ],
+        Custom: [
+            { label: 'Total Sales', value: '₹38.6K' },
+            { label: 'Top Selling', value: 'Amoxicillin' },
+            { label: 'GST Collected', value: '₹1,930' },
+            { label: 'Profit Margin', value: '16.8%' },
+        ],
+    }
+
+    const dailySales = salesData[range]
+    const kpis = kpisByRange[range]
+    const maxAmt = Math.max(...dailySales.map((d) => d.amt))
+
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+                <div className="flex rounded-full overflow-hidden border border-white/10">
+                    {['Today', 'This Month', 'Custom'].map((r) => (
+                        <button
+                            key={r}
+                            onClick={() => setRange(r)}
+                            style={r === range ? { backgroundColor: PRIMARY } : {}}
+                            className={`px-3 py-1.5 cursor-pointer text-[9px] font-medium transition-all ${r === range ? 'text-white' : 'bg-transparent text-white/40 hover:text-white/70'}`}
+                        >
+                            {r}
+                        </button>
+                    ))}
+                </div>
+                <button
+                    onClick={() => alert('Exporting GSTR-1 ready file...')}
+                    style={{ backgroundColor: PRIMARY }}
+                    className="px-3 py-1.5 cursor-pointer rounded-full text-[9px] font-semibold text-white hover:opacity-90 transition-all"
+                >
+                    EXPORT
+                </button>
+            </div>
+
+            <div className="flex rounded-xl overflow-hidden border border-white/10">
+                {['Sales', 'GST Report'].map((t) => (
+                    <button
+                        key={t}
+                        onClick={() => setTab(t)}
+                        style={t === tab ? { backgroundColor: PRIMARY } : {}}
+                        className={`flex-1 cursor-pointer py-2 text-xs font-medium transition-all duration-300 ${t === tab ? 'text-white' : 'bg-transparent text-white/40 hover:text-white/70'}`}
+                    >
+                        {t}
+                    </button>
+                ))}
+            </div>
+
+            {tab === 'Sales' ? (
+                <>
+                    <div className="grid grid-cols-4 gap-2">
+                        {kpis.map((k) => (
+                            <div key={k.label} className="bg-white/5 rounded-xl p-1 text-center border border-white/10">
+                                <p className="text-[11px] font-bold text-white truncate">{k.value}</p>
+                                <p className="text-[9px] text-white/40">{k.label}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-white/[0.03] border border-white/10 rounded-xl p-3">
+                        <p className="text-[9px] uppercase tracking-widest text-white/30 mb-3">Daily Revenue (₹ '00s)</p>
+                        <div className="flex items-end justify-between gap-2 h-24">
+                            {dailySales.map((d) => (
+                                <div key={d.day} className="flex flex-col items-center justify-end gap-1 flex-1 h-full">
+                                    <div
+                                        style={{
+                                            height: `${(d.amt / maxAmt) * 100}%`,
+                                            backgroundColor: PRIMARY,
+                                            minHeight: '2px',
+                                        }}
+                                        className="w-full rounded-t-sm transition-all duration-200 ease-in-out"
+                                    />
+                                    <span className="text-[8px] text-white/40">{d.day}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <div className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden">
+                    <div className="grid grid-cols-3 px-3 py-2 bg-white/5 border-b border-white/10">
+                        {['GST Slab', 'Taxable Value', 'Tax Collected'].map((h) => (
+                            <span key={h} className="text-[8px] uppercase tracking-widest text-white/30 font-medium">{h}</span>
+                        ))}
+                    </div>
+                    {[
+                        { slab: '5%', val: '₹98,400', tax: '₹4,920' },
+                        { slab: '12%', val: '₹14,200', tax: '₹1,704' },
+                        { slab: '18%', val: '₹1,200', tax: '₹216' },
+                    ].map((row, i) => (
+                        <div key={i} className="grid grid-cols-3 px-3 py-2.5 items-center border-b border-white/[0.06] last:border-b-0">
+                            <span className="text-[11px] text-white/80 font-medium">{row.slab}</span>
+                            <span className="text-[10px] text-white/50">{row.val}</span>
+                            <span style={{ color: PRIMARY_TEXT }} className="text-[10px] font-semibold">{row.tax}</span>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
